@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="ADMINISTRADOR">
+        <menu>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Detalles"
+                android:icon="@drawable/ic_detalles_24dp"
+                android:title="DETALLES"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Informes"
+                android:icon="@drawable/ic_informes_black"
+                android:title="INFORMES"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/REPORTE"
+                android:icon="@drawable/ic_estadistica_black"
+                android:title="ESTADÍSTICAS"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/CrearAdministrador"
+                android:icon="@drawable/ic_create_black"
+                android:title="CREAR ADMINISTRADOR"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/CerrarSesion"
+                android:icon="@drawable/ic_close_black"
+                android:title="CERRAR SESIÓN"></item>
+
+        </menu>
+
+    </item>
+</menu>

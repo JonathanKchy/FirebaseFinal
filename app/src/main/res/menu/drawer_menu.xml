@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="PRINCIPAL">
+        <menu>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/SincronizacionFamiliar"
+                android:icon="@drawable/ic_sync_black"
+                android:title="SINCRONIZACION FAMILIAR"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/EliminarSincronizacion"
+                android:icon="@drawable/ic_sentiment_dissatisfied_black"
+                android:title="ELIMINAR SINCRONIZACION"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Transcripcion"
+                android:icon="@drawable/ic_record_voice_over_black"
+                android:title="TRANSCRIPCIÓN"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Portafolio"
+                android:icon="@drawable/ic_folder_open_black"
+                android:title="PORTAFOLIO"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Ubicacion"
+                android:icon="@drawable/ic_location_on_black"
+                android:title="UBICACIÓN"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Estadistica"
+                android:icon="@drawable/ic_estadistica_black"
+                android:title="REPORTE"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Chat"
+                android:icon="@drawable/ic_chat_black"
+                android:title="CHAT"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/CerrarSesion"
+                android:icon="@drawable/ic_close_black"
+                android:title="CERRAR SESIÓN"></item>
+        </menu>
+
+    </item>
+</menu>

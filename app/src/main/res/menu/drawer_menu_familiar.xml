@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="FAMILIAR">
+        <menu>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/SincronizacionPrincipal"
+                android:icon="@drawable/ic_sync_black"
+                android:title="SINCRONIZACION PRINCIPAL"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Ubicacion"
+                android:icon="@drawable/ic_location_on_black"
+                android:title="VER UBICACIÓN"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Estadistica"
+                android:icon="@drawable/ic_estadistica_black"
+                android:title="REPORTE"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/Chat"
+                android:icon="@drawable/ic_chat_black"
+                android:title="CHAT"></item>
+            <item
+                android:layout_width="wrap_content"
+                android:id="@+id/CerrarSesion"
+                android:icon="@drawable/ic_close_black"
+                android:title="CERRAR SESIÓN"></item>
+        </menu>
+
+    </item>
+</menu>

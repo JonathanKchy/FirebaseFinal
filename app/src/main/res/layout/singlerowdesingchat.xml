@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:elevation="0dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        android:gravity="bottom"
+        android:layout_gravity="bottom">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sincronismotext"
+
+            android:text="This is Course Name"
+            android:textSize="0sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginLeft="0dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/estadotext"
+            android:text="This is Demo Name"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textotext"
+            android:gravity="center"
+            android:text="This is Course Name"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/estadotext"
+            android:layout_marginLeft="10dp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
