@@ -198,7 +198,7 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
                 fragmentTransaction.commit();
             }else {
                 //ir a chatfragment
-                Toast.makeText(this, condicionSincronismo, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, condicionSincronismo, Toast.LENGTH_LONG).show();
                 fragmentManager=getSupportFragmentManager();
                 fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container,new ChatFragment());

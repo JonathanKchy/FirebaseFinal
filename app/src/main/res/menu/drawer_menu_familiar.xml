@@ -4,11 +4,6 @@
         <menu>
             <item
                 android:layout_width="wrap_content"
-                android:id="@+id/SincronizacionPrincipal"
-                android:icon="@drawable/ic_sync_black"
-                android:title="SINCRONIZACION PRINCIPAL"></item>
-            <item
-                android:layout_width="wrap_content"
                 android:id="@+id/Ubicacion"
                 android:icon="@drawable/ic_location_on_black"
                 android:title="VER UBICACIÓN"></item>
