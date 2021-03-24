@@ -6,14 +6,21 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,20 +29,47 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapaActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationClickListener,GoogleMap.OnMyLocationButtonClickListener  {
+public class MapaActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button btnEnviar;
-    private String ubicacion;
+    private String ubicacion,latitud,longitud;
+    private String contador="0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        int status= GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+        if(status== ConnectionResult.SUCCESS) {
+            contador="1";
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+        }else {
+            Dialog dialog=GooglePlayServicesUtil.getErrorDialog(status,(Activity) getApplicationContext(),10);
+            dialog.show();
+        }
+
+        btnEnviar=(Button)findViewById(R.id.buttonUbicacion);
+        ubicacion=null;
+        btnEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.setPackage("com.whatsapp");
+                intent.putExtra(Intent.EXTRA_TEXT, ubicacion);
+                try{
+                    startActivity(intent);
+                }catch (android.content.ActivityNotFoundException ex){
+                    Toast.makeText(MapaActivity.this, "no tiene instalado Whatsapp", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(MapaActivity.this, "Presione su ubicación en el mapa", Toast.LENGTH_LONG).show();
+            }
+        });
         getLocalizacion();
     }
 
@@ -70,6 +104,7 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                ubicacion=(String)"https://www.google.com/maps/place/"+location.getLatitude()+","+location.getLongitude();
                 LatLng miUbicacion = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(miUbicacion).title("ubicacion actual"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(miUbicacion));
@@ -98,18 +133,13 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+
 
 
     }
 
-    @Override
-    public void onMyLocationClick(@NonNull Location location) {
 
-    }
-
-    @Override
-    public boolean onMyLocationButtonClick() {
-        return false;
-    }
 }
