@@ -28,6 +28,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapaActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -35,15 +47,20 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
     private Button btnEnviar;
     private String ubicacion,latitud,longitud;
     private String contador="0";
+    private DatabaseReference DbRef;
+    private FirebaseAuth baseAutenticacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
+        baseAutenticacion= FirebaseAuth.getInstance();
+        DbRef= FirebaseDatabase.getInstance().getReference();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         int status= GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
         if(status== ConnectionResult.SUCCESS) {
-            contador="1";
+
+
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
@@ -105,6 +122,33 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(Location location) {
                 ubicacion=(String)"https://www.google.com/maps/place/"+location.getLatitude()+","+location.getLongitude();
+                latitud=String.valueOf(location.getLatitude());
+                longitud=String.valueOf(location.getLongitude());
+                if(contador.equals("0")){
+                    final String id=baseAutenticacion.getCurrentUser().getUid();
+                    DbRef.child("USUARIOS").child("PRINCIPAL").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){}
+                            DateFormat df = new SimpleDateFormat("EEEE, d MMMM yyyy, HH:mm:ss");
+                            String date = df.format(Calendar.getInstance().getTime());
+                            final Map<String,Object> mapUsuario=new HashMap<>();
+                            mapUsuario.put("fecha",date);
+                            mapUsuario.put("latitud",latitud);
+                            mapUsuario.put("longitud",longitud);
+                            DbRef.child("UBICACION").child(id).push().setValue(mapUsuario);
+                            DbRef=null;
+                            contador="1";
+
+                        }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                }
                 LatLng miUbicacion = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(miUbicacion).title("ubicacion actual"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(miUbicacion));
