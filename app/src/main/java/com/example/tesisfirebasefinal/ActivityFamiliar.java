@@ -123,11 +123,16 @@ public class ActivityFamiliar extends AppCompatActivity implements NavigationVie
 
         drawerLayout2.closeDrawer(GravityCompat.START);
         if (menuItem.getItemId()==R.id.Ubicacion){
-            Toast.makeText(this, "Ver Ubicacion", Toast.LENGTH_LONG).show();
-            /*fragmentManager2=getSupportFragmentManager();
-            fragmentTransaction2=fragmentManager2.beginTransaction();
-            fragmentTransaction2.replace(R.id.container,new FamiliarFragment());
-            fragmentTransaction2.commit();*/
+            if(condicionSincronismoPrincipal.equals("0")){
+
+                Toast.makeText(this, "Por Favor, pide sincronizar a usuario Principal", Toast.LENGTH_LONG).show();
+
+            }else {
+                //ir a chatfragment
+                //Toast.makeText(this, condicionSincronismoPrincipal, Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ActivityFamiliar.this,MapaActivityFamiliar.class));
+
+            }
 
         }
         if (menuItem.getItemId()==R.id.Estadistica){

@@ -178,7 +178,6 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
             fragmentTransaction.commit();
         }
         if (menuItem.getItemId()==R.id.Ubicacion){
-            Toast.makeText(this, "Ubicacion", Toast.LENGTH_LONG).show();
             startActivity(new Intent(ActivityTranscripcion.this,MapaActivity.class));
         }
         if (menuItem.getItemId()==R.id.Estadistica){

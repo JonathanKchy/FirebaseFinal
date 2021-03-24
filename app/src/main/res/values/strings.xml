@@ -31,4 +31,5 @@
     <string name="close2">close2</string>
     <string name="open3">open3</string>
     <string name="close3">close3</string>
+    <string name="title_activity_mapa_familiar">Map</string>
 </resources>
