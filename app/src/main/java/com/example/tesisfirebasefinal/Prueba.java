@@ -1,20 +1,26 @@
 package com.example.tesisfirebasefinal;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.Html;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import com.example.tesisfirebasefinal.Fragments.myadapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,10 +46,15 @@ import java.io.IOException;
 import harmony.java.awt.Color;
 
 public class Prueba extends AppCompatActivity {
-    String NOMBRE_DIRECTORIO = "MisPDFs",nombreUsuario;
-    String NOMBRE_DOCUMENTO = "MiPDF.pdf";
+    RecyclerView recview;
+    myadapter adapter;
+    String idPropio;
+
     private DatabaseReference DbRef;
     private FirebaseAuth baseAutenticacion;
+    String NOMBRE_DIRECTORIO = "MisPDFs",nombreUsuario;
+    String NOMBRE_DOCUMENTO = "MiPDF.pdf";
+
     EditText etTexto;
     Button btnGenerar;
     Document documento;
@@ -60,7 +71,7 @@ public class Prueba extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prueba);
-        etTexto = findViewById(R.id.etTexto);
+        //etTexto = findViewById(R.id.etTexto);
         btnGenerar = findViewById(R.id.btnGenerar);
         baseAutenticacion= FirebaseAuth.getInstance();
         DbRef= FirebaseDatabase.getInstance().getReference();
@@ -73,9 +84,6 @@ public class Prueba extends AppCompatActivity {
                     //
                     contador=(int)dataSnapshot.child("TRANSCRIPCIONES").child(id).getChildrenCount();
                     nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(id).child("Apodo").getValue().toString();
-                    Toast.makeText(Prueba.this, "eL NUMERO DE TRANSCRICIONES SON: "+contador, Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(Prueba.this, "eL NUMERO DE TRANSCRICIONES SON: 0", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -118,10 +126,11 @@ public class Prueba extends AppCompatActivity {
             Paragraph paragraph=new Paragraph("Hola "+nombreUsuario,fNegrita);
             paragraph.setAlignment(Element.ALIGN_CENTER);
             documento.add(paragraph);
-            Paragraph paragraph2=new Paragraph("Tienes un total de: "+contador+" transcripciones",fAzul);
+            Paragraph paragraph2=new Paragraph("Tienes un total de: "+contador+" transcripciones\n\n",fAzul);
             paragraph2.setAlignment(Element.ALIGN_CENTER);
             documento.add(paragraph2);
-            documento.add(new Paragraph( etTexto.getText().toString()+"\n\n"));
+           // documento.add(new Paragraph( etTexto.getText().toString()+"\n\n"));
+
 
 
             // Insertamos una tabla
@@ -205,9 +214,15 @@ public class Prueba extends AppCompatActivity {
         // acciones que se ejecutan tras los milisegundos
             crearPDF();
                 Toast.makeText(Prueba.this, "SE CREO EL PDF", Toast.LENGTH_LONG).show();
+                finish();
 
             }
 }, milisegundos);
 }
-
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == event.KEYCODE_BACK){
+            this.finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
