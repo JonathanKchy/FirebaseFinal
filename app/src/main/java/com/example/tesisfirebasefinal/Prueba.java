@@ -103,15 +103,15 @@ public class Prueba extends AppCompatActivity {
         }
 
         // Genera el documento
-        btnGenerar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+       // btnGenerar.setOnClickListener(new View.OnClickListener() {
+         //   @Override
+           // public void onClick(View v) {
                 documento = new Document();
                 base();
                esperarYCerrar(MILISEGUNDOS_ESPERA);
 
-            }
-        });
+       //     }
+        //});
     }
     public void crearPDF() {
 
