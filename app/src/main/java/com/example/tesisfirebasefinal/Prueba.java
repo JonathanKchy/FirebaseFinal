@@ -208,16 +208,16 @@ public class Prueba extends AppCompatActivity {
         });
     }
     public void esperarYCerrar(int milisegundos) {
-    Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-        // acciones que se ejecutan tras los milisegundos
-            crearPDF();
-                Toast.makeText(Prueba.this, "SE CREO EL PDF", Toast.LENGTH_LONG).show();
-                finish();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // acciones que se ejecutan tras los milisegundos
+                    crearPDF();
+                    Toast.makeText(Prueba.this, "SE CREO EL PDF", Toast.LENGTH_LONG).show();
+                    finish();
 
-            }
-}, milisegundos);
+                }
+            }, milisegundos);
 }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == event.KEYCODE_BACK){

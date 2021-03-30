@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.example.tesisfirebasefinal.Fragments.ChatFragment;
 import com.example.tesisfirebasefinal.Fragments.ChatFragmentFamiliar;
 import com.example.tesisfirebasefinal.Fragments.FamiliarFragment;
+import com.example.tesisfirebasefinal.Fragments.ReporteFamiliarFragment;
+import com.example.tesisfirebasefinal.Fragments.ReporteFragment;
 import com.example.tesisfirebasefinal.Fragments.SincronismoFragment;
 import com.example.tesisfirebasefinal.Fragments.TranscripcionFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -136,8 +138,16 @@ public class ActivityFamiliar extends AppCompatActivity implements NavigationVie
 
         }
         if (menuItem.getItemId()==R.id.Estadistica){
-            Toast.makeText(this, "Estadistica", Toast.LENGTH_LONG).show();
-            //startActivity(new Intent(ActivityFamiliar.this,MapaActivity.class));
+            if(condicionSincronismoPrincipal.equals("0")){
+
+                Toast.makeText(this, "Por Favor, pide sincronizar a usuario Principal", Toast.LENGTH_LONG).show();
+
+            }else {
+                fragmentManager2=getSupportFragmentManager();
+                fragmentTransaction2=fragmentManager2.beginTransaction();
+                fragmentTransaction2.replace(R.id.containerFamiliar,new ReporteFamiliarFragment(condicionSincronismoPrincipal));
+                fragmentTransaction2.commit();
+            }
         }
         if (menuItem.getItemId()==R.id.Chat){
             if(condicionSincronismoPrincipal.equals("0")){
