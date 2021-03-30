@@ -182,11 +182,11 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
         }
         if (menuItem.getItemId()==R.id.Estadistica){
             //Toast.makeText(this, "Estadistica", Toast.LENGTH_LONG).show();
-            /*fragmentManager=getSupportFragmentManager();
+            fragmentManager=getSupportFragmentManager();
             fragmentTransaction=fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container,new ReporteFragment());
-            fragmentTransaction.commit();*/
-            startActivity(new Intent(ActivityTranscripcion.this,Prueba.class));
+            fragmentTransaction.commit();
+           // startActivity(new Intent(ActivityTranscripcion.this,Prueba.class));
         }
         if (menuItem.getItemId()==R.id.Chat){
             if(condicionSincronismo.equals("0")){

@@ -1,12 +1,13 @@
 package com.example.tesisfirebasefinal.Fragments;
 
-public class model {
 
+public class modelReporte {
     String fecha,titulo,transcripcion;
-    public model() {
+
+    public modelReporte() {
     }
 
-    public model(String fecha, String titulo, String transcripcion) {
+    public modelReporte(String fecha, String titulo, String transcripcion) {
         this.fecha = fecha;
         this.titulo = titulo;
         this.transcripcion = transcripcion;
