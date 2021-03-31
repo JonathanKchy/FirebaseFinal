@@ -68,9 +68,7 @@ public class Prueba extends AppCompatActivity {
     private Font fNegrita=new Font(Font.TIMES_ROMAN,30,Font.BOLD);
     private Font fAzul=new Font(Font.TIMES_ROMAN,20,Font.BOLD, Color.BLUE);
 
-    public Prueba(String idPropio2) {
-        this.idPropio2 = idPropio2;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,13 +97,13 @@ public class Prueba extends AppCompatActivity {
             }
         });
         // Permisos
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+        /*if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                         PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
                     1000);
-        }
+        }*/
 
         // Genera el documento
        // btnGenerar.setOnClickListener(new View.OnClickListener() {
