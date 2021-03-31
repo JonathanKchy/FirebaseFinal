@@ -1,6 +1,7 @@
 package com.example.tesisfirebasefinal.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,10 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.tesisfirebasefinal.PruebaFamiliar;
 import com.example.tesisfirebasefinal.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +39,7 @@ public class ReporteFamiliarFragment extends Fragment {
     myadapterreporteF adapter;
     String idPropio,idPrincipal="22";
     public static int MILISEGUNDOS_ESPERA = 10;
-
+    Button PDFfam;
     private DatabaseReference DbRef;
     private FirebaseAuth baseAutenticacion;
 
@@ -74,6 +77,16 @@ public class ReporteFamiliarFragment extends Fragment {
         baseAutenticacion= FirebaseAuth.getInstance();
         final String id=baseAutenticacion.getCurrentUser().getUid();
         DbRef= FirebaseDatabase.getInstance().getReference();
+        PDFfam=(Button)view.findViewById(R.id.butReporFam);
+        PDFfam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), PruebaFamiliar.class);
+                i.putExtra("dato",idPropio);
+                startActivity(i);
+                //startActivity(new Intent(getActivity(),PruebaFamiliar.class));
+            }
+        });
         obtener();
 
         return view;

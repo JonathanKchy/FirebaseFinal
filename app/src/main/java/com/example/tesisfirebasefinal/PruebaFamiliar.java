@@ -1,25 +1,18 @@
 package com.example.tesisfirebasefinal;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.text.Html;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.tesisfirebasefinal.Fragments.myadapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,15 +20,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -45,14 +34,14 @@ import java.io.IOException;
 
 import harmony.java.awt.Color;
 
-public class Prueba extends AppCompatActivity {
+public class PruebaFamiliar extends AppCompatActivity {
     RecyclerView recview;
     myadapter adapter;
     String idPropio;
 
     private DatabaseReference DbRef;
     private FirebaseAuth baseAutenticacion;
-    String NOMBRE_DIRECTORIO = "MisPDFs",nombreUsuario;
+    String NOMBRE_DIRECTORIO = "MisPDFsFamiliar",nombreUsuario;
     String NOMBRE_DOCUMENTO = "MiPDF.pdf";
 
     EditText etTexto;
@@ -62,33 +51,42 @@ public class Prueba extends AppCompatActivity {
     File file;
     FileOutputStream ficheroPDF;
     PdfWriter writer;
-    int contador;
+    int contador2;
     String idPropio2;
+    String dato;
     public static int MILISEGUNDOS_ESPERA = 2000;
     private Font fNegrita=new Font(Font.TIMES_ROMAN,30,Font.BOLD);
     private Font fAzul=new Font(Font.TIMES_ROMAN,20,Font.BOLD, Color.BLUE);
 
-    public Prueba(String idPropio2) {
-        this.idPropio2 = idPropio2;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prueba);
+        setContentView(R.layout.activity_prueba_familiar);
         //etTexto = findViewById(R.id.etTexto);
-        btnGenerar = findViewById(R.id.btnGenerar);
+        dato=getIntent().getStringExtra("dato");
+        btnGenerar = findViewById(R.id.btnGenerarFam);
         baseAutenticacion= FirebaseAuth.getInstance();
         DbRef= FirebaseDatabase.getInstance().getReference();
         final String id=baseAutenticacion.getCurrentUser().getUid();
+        //Toast.makeText(PruebaFamiliar.this, dato, Toast.LENGTH_LONG).show();
+       // Toast.makeText(PruebaFamiliar.this,contador2, Toast.LENGTH_LONG).show();
 
-        DbRef.addValueEventListener(new ValueEventListener() {
+       DbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     //
-                    contador=(int)dataSnapshot.child("TRANSCRIPCIONES").child(id).getChildrenCount();
-                    nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(id).child("Apodo").getValue().toString();
+
+                    contador2= (int) dataSnapshot.getChildrenCount();
+                    nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(dato).child("Apodo").getValue().toString();
+                    Toast.makeText(PruebaFamiliar.this, nombreUsuario, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(PruebaFamiliar.this,contador2, Toast.LENGTH_LONG).show();
+
+                }else{
+                    Toast.makeText(PruebaFamiliar.this, "no existe", Toast.LENGTH_LONG).show();
+
                 }
             }
 
@@ -99,24 +97,26 @@ public class Prueba extends AppCompatActivity {
             }
         });
         // Permisos
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+        /*if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                         PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
                     1000);
-        }
+        }*/
 
         // Genera el documento
-       // btnGenerar.setOnClickListener(new View.OnClickListener() {
-         //   @Override
-           // public void onClick(View v) {
-                documento = new Document();
-                base();
-               esperarYCerrar(MILISEGUNDOS_ESPERA);
+        // btnGenerar.setOnClickListener(new View.OnClickListener() {
+        //   @Override
+        // public void onClick(View v) {
+        documento = new Document();
+        base();
+        esperarYCerrar(MILISEGUNDOS_ESPERA);
 
-       //     }
+        //     }
         //});
+        //Toast.makeText(PruebaFamiliar.this, contador2, Toast.LENGTH_LONG).show();
+
     }
     public void crearPDF() {
 
@@ -131,10 +131,10 @@ public class Prueba extends AppCompatActivity {
             Paragraph paragraph=new Paragraph("Hola "+nombreUsuario,fNegrita);
             paragraph.setAlignment(Element.ALIGN_CENTER);
             documento.add(paragraph);
-            Paragraph paragraph2=new Paragraph("Tienes un total de: "+contador+" transcripciones\n\n",fAzul);
+            Paragraph paragraph2=new Paragraph("Tienes un total de: "+contador2+" transcripciones\n\n",fAzul);
             paragraph2.setAlignment(Element.ALIGN_CENTER);
             documento.add(paragraph2);
-           // documento.add(new Paragraph( etTexto.getText().toString()+"\n\n"));
+            // documento.add(new Paragraph( etTexto.getText().toString()+"\n\n"));
 
 
 
@@ -144,7 +144,7 @@ public class Prueba extends AppCompatActivity {
                 tabla.addCell("CELDA "+i);
             }*/
 
-           documento.add(tabla);
+            documento.add(tabla);
 
         } catch(DocumentException e) {
         } catch(IOException e) {
@@ -183,14 +183,14 @@ public class Prueba extends AppCompatActivity {
     }
     public void base(){
         final String id=baseAutenticacion.getCurrentUser().getUid();
-        DbRef.child("TRANSCRIPCIONES").child(id).addValueEventListener(new ValueEventListener() {
+        DbRef.child("TRANSCRIPCIONES").child(dato).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
 
-                    tabla = new PdfPTable(1);
+                tabla = new PdfPTable(1);
 
                     /*for(int i = 0 ; i < contador ; i++) {
                         tabla.addCell("CELDA "+i);
@@ -213,17 +213,17 @@ public class Prueba extends AppCompatActivity {
         });
     }
     public void esperarYCerrar(int milisegundos) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    // acciones que se ejecutan tras los milisegundos
-                    crearPDF();
-                    Toast.makeText(Prueba.this, "SE CREO EL PDF", Toast.LENGTH_LONG).show();
-                    finish();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // acciones que se ejecutan tras los milisegundos
+                crearPDF();
+                Toast.makeText(PruebaFamiliar.this, "SE CREO EL PDF", Toast.LENGTH_LONG).show();
+                finish();
 
-                }
-            }, milisegundos);
-}
+            }
+        }, milisegundos);
+    }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == event.KEYCODE_BACK){
             this.finish();
