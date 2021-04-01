@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tesisfirebasefinal.Fragments.AdminFragment;
+import com.example.tesisfirebasefinal.Fragments.AdminUsuariosFragment;
 import com.example.tesisfirebasefinal.Fragments.FamiliarFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,12 +50,7 @@ public class ActivityAdministrador extends AppCompatActivity implements Navigati
         setSupportActionBar(toolbar3);
         drawerLayout3=(DrawerLayout)findViewById(R.id.drawerAdmin);
         navigationView3=(NavigationView)findViewById(R.id.navigationViewAdmin);
-        actionBarDrawerToggle3=new ActionBarDrawerToggle(this,drawerLayout3,R.string.open3,R.string.close3);
-        drawerLayout3.addDrawerListener(actionBarDrawerToggle3);
-        actionBarDrawerToggle3.setDrawerIndicatorEnabled(true);
-        actionBarDrawerToggle3.syncState();
-        //establecer el evento onclick al navigationview
-        navigationView3.setNavigationItemSelectedListener(this);
+
 
         //cargo usuario FBase
         baseAutenticacion= FirebaseAuth.getInstance();
@@ -78,10 +74,16 @@ public class ActivityAdministrador extends AppCompatActivity implements Navigati
 
             }
         });
+        actionBarDrawerToggle3=new ActionBarDrawerToggle(this,drawerLayout3,toolbar3,R.string.open3,R.string.close3);
+        drawerLayout3.addDrawerListener(actionBarDrawerToggle3);
+        actionBarDrawerToggle3.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle3.syncState();
+        //establecer el evento onclick al navigationview
+        navigationView3.setNavigationItemSelectedListener(this);
         //cargar fragment inicial
         fragmentManager3=getSupportFragmentManager();
         fragmentTransaction3=fragmentManager3.beginTransaction();
-        fragmentTransaction3.add(R.id.containerAdmin,new AdminFragment());
+        fragmentTransaction3.add(R.id.containerAdmin,new AdminUsuariosFragment());
         fragmentTransaction3.commit();
         txtViewHea3=(TextView) findViewById(R.id.textView4);
     }
@@ -90,16 +92,12 @@ public class ActivityAdministrador extends AppCompatActivity implements Navigati
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout3.closeDrawer(GravityCompat.START);
         if (menuItem.getItemId()==R.id.Detalles){
-            Toast.makeText(this, "Detalles", Toast.LENGTH_LONG).show();
+            fragmentManager3=getSupportFragmentManager();
+            fragmentTransaction3=fragmentManager3.beginTransaction();
+            fragmentTransaction3.replace(R.id.containerAdmin,new AdminUsuariosFragment());
+            fragmentTransaction3.commit();
         }
-        if (menuItem.getItemId()==R.id.Informes){
-            Toast.makeText(this, "Informes", Toast.LENGTH_LONG).show();
-            /*fragmentManager2=getSupportFragmentManager();
-            fragmentTransaction2=fragmentManager2.beginTransaction();
-            fragmentTransaction2.replace(R.id.container,new FamiliarFragment());
-            fragmentTransaction2.commit();*/
 
-        }
         if (menuItem.getItemId()==R.id.Estadistica){
             Toast.makeText(this, "Estadistica", Toast.LENGTH_LONG).show();
             //startActivity(new Intent(ActivityFamiliar.this,MapaActivity.class));

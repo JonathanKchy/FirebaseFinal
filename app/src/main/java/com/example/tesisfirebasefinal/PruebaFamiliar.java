@@ -81,7 +81,6 @@ public class PruebaFamiliar extends AppCompatActivity {
 
                     contador2= (int) dataSnapshot.getChildrenCount();
                     nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(dato).child("Apodo").getValue().toString();
-                    Toast.makeText(PruebaFamiliar.this, nombreUsuario, Toast.LENGTH_LONG).show();
                    // Toast.makeText(PruebaFamiliar.this,contador2, Toast.LENGTH_LONG).show();
 
                 }else{

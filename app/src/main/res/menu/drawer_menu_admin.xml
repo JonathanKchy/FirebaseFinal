@@ -9,11 +9,6 @@
                 android:title="DETALLES"></item>
             <item
                 android:layout_width="wrap_content"
-                android:id="@+id/Informes"
-                android:icon="@drawable/ic_informes_black"
-                android:title="INFORMES"></item>
-            <item
-                android:layout_width="wrap_content"
                 android:id="@+id/REPORTE"
                 android:icon="@drawable/ic_estadistica_black"
                 android:title="ESTADÍSTICAS"></item>
