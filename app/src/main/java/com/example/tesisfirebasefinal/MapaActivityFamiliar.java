@@ -71,17 +71,17 @@ public class MapaActivityFamiliar extends FragmentActivity implements OnMapReady
                             marker.remove();
                         }
                        for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
-                           PuntosMapa pm = snapshot.getValue(PuntosMapa.class);
-                           String Fecha=pm.getFecha();
-                           String latitud=pm.getLatitud();
-                           String longitud=pm.getLongitud();
-                           latitudDouble=Double.parseDouble(latitud);
-                           longitudDouble=Double.parseDouble(longitud);
-                           MarkerOptions markerOptions=new MarkerOptions();
-                           markerOptions.title(Fecha);
-                           markerOptions.position(new LatLng(latitudDouble,longitudDouble));
-                           tmpRealTimeMarkers.add(mMap.addMarker(markerOptions));
-                       }
+                            PuntosMapa pm = snapshot.getValue(PuntosMapa.class);
+                            String Fecha=pm.getFecha();
+                            String latitud=pm.getLatitud();
+                            String longitud=pm.getLongitud();
+                            latitudDouble=Double.parseDouble(latitud);
+                            longitudDouble=Double.parseDouble(longitud);
+                            MarkerOptions markerOptions=new MarkerOptions();
+                            markerOptions.title(Fecha);
+                            markerOptions.position(new LatLng(latitudDouble,longitudDouble));
+                            tmpRealTimeMarkers.add(mMap.addMarker(markerOptions));
+                        }
                         realTimeMarkers.clear();
                        realTimeMarkers.addAll(tmpRealTimeMarkers);
                         LatLng miUbicacion = new LatLng(latitudDouble, longitudDouble);

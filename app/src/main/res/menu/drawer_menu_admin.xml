@@ -11,7 +11,7 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/REPORTE"
                 android:icon="@drawable/ic_estadistica_black"
-                android:title="ESTADÍSTICAS"></item>
+                android:title="REPORTE GENERAL"></item>
             <item
                 android:layout_width="wrap_content"
                 android:id="@+id/CrearAdministrador"

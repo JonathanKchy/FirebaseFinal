@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.InformeUsuariosFragment">
+    tools:context=".Fragments.ReporteGeneralFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,11 +23,12 @@
 
 
             <TextView
+                android:id="@+id/totalAdmin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="70dp"
-                android:text="Tu usuario seleccionado es:"
+                android:text="totalAdmin"
                 android:textColor="#000000"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -41,13 +42,13 @@
             </TextView>
 
             <TextView
-                android:id="@+id/textnombredePrincipal"
+                android:id="@+id/totalFamiliar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10sp"
                 android:layout_marginTop="15dp"
-                android:text="textnombredePrincipal"
+                android:text="toalFamiliar"
                 android:textColor="@color/colorAccent"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -61,11 +62,12 @@
             </TextView>
 
             <TextView
+                android:id="@+id/totalPrincipal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="17sp"
-                android:text="Con el correo:"
+                android:text="totalPrincipal"
                 android:textColor="#000000"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -79,14 +81,14 @@
             </TextView>
 
             <TextView
-                android:id="@+id/textcorreodePrincipal"
+                android:id="@+id/totalTranscripciones"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20sp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10sp"
-                android:text="textcorreodePrincipal"
+                android:text="totaltranscripciones"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -100,13 +102,13 @@
             </TextView>
 
             <TextView
-                android:id="@+id/textSincronismoOpcion"
+                android:id="@+id/totalMensajes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
                 android:gravity="center"
-                android:text="sincronismo"
+                android:text="totalMensajes"
                 android:textColor="#934646"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -119,26 +121,8 @@
 
             </TextView>
 
-            <TextView
-                android:id="@+id/textTotalTrans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10sp"
-                android:text="total transcr"
-                android:textColor="@color/colorAccent"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.698">
-
-            </TextView>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

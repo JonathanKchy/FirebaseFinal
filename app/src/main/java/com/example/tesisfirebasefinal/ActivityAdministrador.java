@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.tesisfirebasefinal.Fragments.AdminFragment;
 import com.example.tesisfirebasefinal.Fragments.AdminUsuariosFragment;
 import com.example.tesisfirebasefinal.Fragments.FamiliarFragment;
+import com.example.tesisfirebasefinal.Fragments.ReporteGeneralFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -92,15 +93,19 @@ public class ActivityAdministrador extends AppCompatActivity implements Navigati
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout3.closeDrawer(GravityCompat.START);
         if (menuItem.getItemId()==R.id.Detalles){
+            DbRef=null;
             fragmentManager3=getSupportFragmentManager();
             fragmentTransaction3=fragmentManager3.beginTransaction();
             fragmentTransaction3.replace(R.id.containerAdmin,new AdminUsuariosFragment());
             fragmentTransaction3.commit();
         }
 
-        if (menuItem.getItemId()==R.id.Estadistica){
-            Toast.makeText(this, "Estadistica", Toast.LENGTH_LONG).show();
-            //startActivity(new Intent(ActivityFamiliar.this,MapaActivity.class));
+        if (menuItem.getItemId()==R.id.REPORTE){
+            DbRef=null;
+            fragmentManager3=getSupportFragmentManager();
+            fragmentTransaction3=fragmentManager3.beginTransaction();
+            fragmentTransaction3.replace(R.id.containerAdmin,new ReporteGeneralFragment());
+            fragmentTransaction3.commit();
         }
         if (menuItem.getItemId()==R.id.CrearAdministrador){
             Toast.makeText(this, "CrearAdministrador", Toast.LENGTH_LONG).show();
