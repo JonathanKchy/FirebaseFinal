@@ -34,7 +34,28 @@
             android:textColor="@color/colorPrimaryDark"
             android:layout_below="@id/nombreAdmin"
             android:layout_marginLeft="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/idUsuarioAdmin"
 
+            android:text="This is Course Name"
+            android:textSize="0sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/correoAdmin"
+            android:layout_marginLeft="0dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/idSincronismoAdmin"
+
+            android:text="This is Course Name"
+            android:textSize="0sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/idUsuarioAdmin"
+            android:layout_marginLeft="0dp"
+            />
 
     </RelativeLayout>
 

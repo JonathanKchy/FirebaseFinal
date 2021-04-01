@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tesisfirebasefinal.R;
@@ -20,9 +21,18 @@ public class myadapteradmin  extends FirebaseRecyclerAdapter<modelAdmin,myadapte
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull modelAdmin model) {
+    protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull final modelAdmin model) {
         holder.nombre.setText(model.getApodo());
         holder.correo.setText(model.getCorreo());
+        holder.idPropio.setText(model.getIdPropio());
+        holder.idSincronismo.setText(model.getSincronismo());
+        holder.nombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity=(AppCompatActivity)v.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.containerAdmin,new InformeUsuariosFragment(model.getApodo(),model.getCorreo(),model.getIdPropio(),model.getSincronismo())).addToBackStack(null).commit();
+            }
+        });
     }
 
     @NonNull
@@ -33,12 +43,14 @@ public class myadapteradmin  extends FirebaseRecyclerAdapter<modelAdmin,myadapte
     }
 
     public class myviewholder extends RecyclerView.ViewHolder{
-        TextView nombre,correo;
+        TextView nombre,correo,idPropio,idSincronismo;
         public myviewholder(@NonNull View itemView) {
             super(itemView);
 
             nombre=itemView.findViewById(R.id.nombreAdmin);
             correo=itemView.findViewById(R.id.correoAdmin);
+            idPropio=itemView.findViewById(R.id.idUsuarioAdmin);
+            idSincronismo=itemView.findViewById(R.id.idSincronismoAdmin);
         }
     }
 }
