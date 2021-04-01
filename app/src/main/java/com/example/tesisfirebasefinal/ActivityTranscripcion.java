@@ -133,7 +133,7 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
         if (menuItem.getItemId()==R.id.SincronizacionFamiliar){
             //Toast.makeText(this, "SincronizacionFamiliar", Toast.LENGTH_LONG).show();
 
-
+            DbRef=null;
             if(condicionSincronismo.equals("0")){
                 Toast.makeText(this, "Por Favor, sincronizar con su Familiar", Toast.LENGTH_LONG).show();
                 fragmentManager=getSupportFragmentManager();
@@ -150,7 +150,7 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
         }
         if (menuItem.getItemId()==R.id.EliminarSincronizacion){
             //Toast.makeText(this, "SincronizacionFamiliar", Toast.LENGTH_LONG).show();
-
+            DbRef=null;
             if(condicionSincronismo.equals("0")){
                 Toast.makeText(this, "Aun no tienes SINCRONISMO", Toast.LENGTH_LONG).show();
 
@@ -164,6 +164,7 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
             }
         }
         if (menuItem.getItemId()==R.id.Transcripcion){
+            DbRef=null;
             fragmentManager=getSupportFragmentManager();
             fragmentTransaction=fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container,new TranscripcionFragment());
@@ -171,6 +172,7 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
 
         }
         if (menuItem.getItemId()==R.id.Portafolio){
+            DbRef=null;
             // Toast.makeText(this, "Portafolio", Toast.LENGTH_LONG).show();
             fragmentManager=getSupportFragmentManager();
             fragmentTransaction=fragmentManager.beginTransaction();
@@ -178,9 +180,11 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
             fragmentTransaction.commit();
         }
         if (menuItem.getItemId()==R.id.Ubicacion){
+            DbRef=null;
             startActivity(new Intent(ActivityTranscripcion.this,MapaActivity.class));
         }
         if (menuItem.getItemId()==R.id.Estadistica){
+            DbRef=null;
             //Toast.makeText(this, "Estadistica", Toast.LENGTH_LONG).show();
             fragmentManager=getSupportFragmentManager();
             fragmentTransaction=fragmentManager.beginTransaction();
@@ -189,6 +193,7 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
            // startActivity(new Intent(ActivityTranscripcion.this,Prueba.class));
         }
         if (menuItem.getItemId()==R.id.Chat){
+            DbRef=null;
             if(condicionSincronismo.equals("0")){
 
                 Toast.makeText(this, "Por Favor, sincronizar con su Familiar", Toast.LENGTH_LONG).show();
@@ -209,7 +214,9 @@ public class ActivityTranscripcion extends AppCompatActivity implements Navigati
             //startActivity(new Intent(ActivityFamiliar.this,MapaActivity.class));
         }
         if (menuItem.getItemId()==R.id.CerrarSesion){
+            DbRef=null;
             baseAutenticacion.signOut();
+
             startActivity(new Intent(ActivityTranscripcion.this,MainActivity.class));
             finish();
         }

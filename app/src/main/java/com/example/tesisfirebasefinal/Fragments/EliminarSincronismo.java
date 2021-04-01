@@ -66,7 +66,7 @@ public class EliminarSincronismo extends Fragment {
         final View view=inflater.inflate(R.layout.fragment_eliminar_sincronismo, container, false);
         baseAutenticacion= FirebaseAuth.getInstance();
         final String id=baseAutenticacion.getCurrentUser().getUid();
-        DbRef= FirebaseDatabase.getInstance().getReference().child("USUARIOS");
+        DbRef= FirebaseDatabase.getInstance().getReference();
 
         btnEliminarSincronismo=(ImageButton) view.findViewById(R.id.botonEliminarSincronismo);
         btnRegresarSincronismo=(ImageButton) view.findViewById(R.id.botonRegresarSincronismo);
@@ -76,7 +76,7 @@ public class EliminarSincronismo extends Fragment {
         correoFamiliar=(TextView)view.findViewById((R.id.textcorreodeFamiliar));
 
 
-        DbRef.child("PRINCIPAL").child(id).addValueEventListener(new ValueEventListener() {
+        DbRef.child("USUARIOS").child("PRINCIPAL").child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -84,7 +84,7 @@ public class EliminarSincronismo extends Fragment {
                     nombreUsuario.setText("HOLA!  "+nomUsuario);
                     idFamiliar=dataSnapshot.child("Sincronismo").getValue().toString();
 
-                    DbRef.child("FAMILIAR").child(idFamiliar).addValueEventListener(new ValueEventListener() {
+                    DbRef.child("USUARIOS").child("FAMILIAR").child(idFamiliar).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.exists()){
@@ -142,8 +142,12 @@ public class EliminarSincronismo extends Fragment {
     }
     public void eliminarSincronismo(){
         final String id=baseAutenticacion.getCurrentUser().getUid();
-        DbRef.child("PRINCIPAL").child(id).child("Sincronismo").setValue("0");
-        DbRef.child("FAMILIAR").child(idFamiliar).child("Sincronismo").setValue("0");
+        DbRef.child("USUARIOS").child("PRINCIPAL").child(id).child("Sincronismo").setValue("0");
+        DbRef.child("USUARIOS").child("FAMILIAR").child(idFamiliar).child("Sincronismo").setValue("0");
+        DbRef.child("MENSAJES").child(id).removeValue();
+        DbRef.child("MENSAJES").child(idFamiliar).removeValue();
+        DbRef.child("UBICACION").child(id).removeValue();
+
         DbRef=null;
         AppCompatActivity activity=(AppCompatActivity)getContext();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.container,new TranscripcionFragment()).addToBackStack(null).commit();

@@ -86,29 +86,30 @@ public class InformeUsuariosFragment extends Fragment {
         baseAutenticacion= FirebaseAuth.getInstance();
         final String id=baseAutenticacion.getCurrentUser().getUid();
         DbRef= FirebaseDatabase.getInstance().getReference().child("TRANSCRIPCIONES");
-        btnRegresarAdmin= (ImageButton) view.findViewById(R.id.botonRegresarAdmin);
         nombreUser=(TextView)view.findViewById(R.id.textnombredePrincipal);
         correoUser=(TextView)view.findViewById(R.id.textcorreodePrincipal);
         idSincronismoUser=(TextView)view.findViewById(R.id.textSincronismoOpcion);
         transcripciones=(TextView)view.findViewById(R.id.textTotalTrans);
+        if (idDeSincronismo.equals("0")){
+            idSincronismoUser.setText("Aun no tiene Sincronismo");
+        }else {
+            idSincronismoUser.setText("Ya tiene Sincronismo");
 
+        }
+        nombreUser.setText(nombre);
+        correoUser.setText(correo);
         DbRef.child(idDeUsuario).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    if (idDeSincronismo.equals("0")){
-                        idSincronismoUser.setText("Aun no tiene Sincronismo");
-                    }else {
-                        idSincronismoUser.setText("Ya tiene Sincronismo");
 
-                    }
                     numeroTranscripciones=(int)dataSnapshot.getChildrenCount();
                     String trans=Integer.toString(numeroTranscripciones);
                     transcripciones.setText("Tiene un total de "+trans+" transcripciones");
-                    nombreUser.setText(nombre);
-                    correoUser.setText(correo);
 
 
+                }else {
+                    transcripciones.setText("No tiene transcripciones");
                 }
             }
 
@@ -117,14 +118,7 @@ public class InformeUsuariosFragment extends Fragment {
 
             }
         });
-        btnRegresarAdmin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppCompatActivity activity=(AppCompatActivity)getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.containerAdmin,new AdminUsuariosFragment()).addToBackStack(null).commit();
 
-            }
-        });
         return view;
     }
 }

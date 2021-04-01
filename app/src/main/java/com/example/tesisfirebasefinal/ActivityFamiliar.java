@@ -164,7 +164,9 @@ public class ActivityFamiliar extends AppCompatActivity implements NavigationVie
             }
         }
         if (menuItem.getItemId()==R.id.CerrarSesion){
+            DbRef=null;
             baseAutenticacion.signOut();
+
             startActivity(new Intent(ActivityFamiliar.this,MainActivity.class));
             finish();
         }

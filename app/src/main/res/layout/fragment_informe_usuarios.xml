@@ -12,23 +12,21 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="373dp"
-            android:layout_height="388dp"
-            android:layout_marginBottom="180dp"
+            android:layout_width="382dp"
+            android:layout_height="478dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
-
-
             <TextView
-                android:layout_marginTop="70dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="70dp"
                 android:text="Tu usuario seleccionado es:"
                 android:textColor="#000000"
                 android:textSize="17sp"
@@ -41,14 +39,15 @@
                 app:layout_constraintVertical_bias="0.698">
 
             </TextView>
+
             <TextView
                 android:id="@+id/textnombredePrincipal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10sp"
                 android:layout_marginTop="15dp"
                 android:text="textnombredePrincipal"
-                android:layout_marginLeft="10sp"
                 android:textColor="@color/colorAccent"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -60,6 +59,7 @@
                 app:layout_constraintVertical_bias="0.698">
 
             </TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="10sp"
                 android:text="textcorreodePrincipal"
                 android:textColor="@color/colorAccent"
@@ -98,13 +98,14 @@
                 app:layout_constraintVertical_bias="0.698">
 
             </TextView>
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/textSincronismoOpcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
+                android:gravity="center"
                 android:text="sincronismo"
                 android:textColor="#934646"
                 android:textSize="20sp"
@@ -135,52 +136,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.698">
-
-            </TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/contenedorBoton"
-            android:layout_width="375dp"
-            android:layout_height="115dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.963">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <ImageButton
-                    android:id="@+id/botonRegresarAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:src="@drawable/ic_keyboard_return_black">
-
-                </ImageButton>
-
-
-
-
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="REGRESAR">
 
             </TextView>
         </LinearLayout>

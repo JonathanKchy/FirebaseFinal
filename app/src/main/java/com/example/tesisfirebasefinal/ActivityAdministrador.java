@@ -107,7 +107,9 @@ public class ActivityAdministrador extends AppCompatActivity implements Navigati
             //startActivity(new Intent(ActivityFamiliar.this,MapaActivity.class));
         }
         if (menuItem.getItemId()==R.id.CerrarSesion){
+            DbRef=null;
             baseAutenticacion.signOut();
+
             startActivity(new Intent(ActivityAdministrador.this,MainActivity.class));
             finish();
         }
