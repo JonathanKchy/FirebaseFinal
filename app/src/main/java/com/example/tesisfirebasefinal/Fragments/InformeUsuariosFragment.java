@@ -2,13 +2,24 @@ package com.example.tesisfirebasefinal.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.tesisfirebasefinal.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +36,11 @@ public class InformeUsuariosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     String nombre,correo,idDeUsuario,idDeSincronismo;
-
+    TextView nombreUser,correoUser,transcripciones,idSincronismoUser;
+    int numeroTranscripciones;
+    private ImageButton btnRegresarAdmin;
+    private DatabaseReference DbRef;
+    private FirebaseAuth baseAutenticacion;
     public InformeUsuariosFragment() {
         // Required empty public constructor
     }
@@ -67,6 +82,49 @@ public class InformeUsuariosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_informe_usuarios, container, false);
+        final View view= inflater.inflate(R.layout.fragment_informe_usuarios, container, false);
+        baseAutenticacion= FirebaseAuth.getInstance();
+        final String id=baseAutenticacion.getCurrentUser().getUid();
+        DbRef= FirebaseDatabase.getInstance().getReference().child("TRANSCRIPCIONES");
+        btnRegresarAdmin= (ImageButton) view.findViewById(R.id.botonRegresarAdmin);
+        nombreUser=(TextView)view.findViewById(R.id.textnombredePrincipal);
+        correoUser=(TextView)view.findViewById(R.id.textcorreodePrincipal);
+        idSincronismoUser=(TextView)view.findViewById(R.id.textSincronismoOpcion);
+        transcripciones=(TextView)view.findViewById(R.id.textTotalTrans);
+
+        DbRef.child(idDeUsuario).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    if (idDeSincronismo.equals("0")){
+                        idSincronismoUser.setText("Aun no tiene Sincronismo");
+                    }else {
+                        idSincronismoUser.setText("Ya tiene Sincronismo");
+
+                    }
+                    numeroTranscripciones=(int)dataSnapshot.getChildrenCount();
+                    String trans=Integer.toString(numeroTranscripciones);
+                    transcripciones.setText("Tiene un total de "+trans+" transcripciones");
+                    nombreUser.setText(nombre);
+                    correoUser.setText(correo);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        btnRegresarAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity=(AppCompatActivity)getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.containerAdmin,new AdminUsuariosFragment()).addToBackStack(null).commit();
+
+            }
+        });
+        return view;
     }
 }

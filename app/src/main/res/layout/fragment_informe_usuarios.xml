@@ -22,32 +22,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <TextView
 
-                android:id="@+id/textnombreSincronismo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+
+            <TextView
                 android:layout_marginTop="70dp"
-                android:text="nombre"
-                android:textColor="@color/colorAccent"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.698">
-
-            </TextView>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:text="Tu familiar seleccionado es:"
+                android:text="Tu usuario seleccionado es:"
                 android:textColor="#000000"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -60,12 +42,12 @@
 
             </TextView>
             <TextView
-                android:id="@+id/textnombredeFamiliar"
+                android:id="@+id/textnombredePrincipal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:text="textnombredeFamiliar"
+                android:text="textnombredePrincipal"
                 android:layout_marginLeft="10sp"
                 android:textColor="@color/colorAccent"
                 android:textSize="25sp"
@@ -97,14 +79,14 @@
             </TextView>
 
             <TextView
-                android:id="@+id/textcorreodeFamiliar"
+                android:id="@+id/textcorreodePrincipal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="20sp"
                 android:layout_marginRight="10sp"
-                android:text="textcorreodeFamiliar"
+                android:text="textcorreodePrincipal"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -117,14 +99,35 @@
 
             </TextView>
             <TextView
+                android:gravity="center"
+                android:id="@+id/textSincronismoOpcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50sp"
-                android:layout_marginLeft="10sp"
-                android:text="Recuerda puedes eliminar tu sincronización pero se eliminaran tus mensajes enviados."
-                android:textColor="#FF0000"
-                android:textSize="17sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:text="sincronismo"
+                android:textColor="#934646"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.698">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/textTotalTrans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10sp"
+                android:text="total transcr"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/scrollView2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -159,7 +162,7 @@
 
 
                 <ImageButton
-                    android:id="@+id/botonRegresarSincronismo"
+                    android:id="@+id/botonRegresarAdmin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
