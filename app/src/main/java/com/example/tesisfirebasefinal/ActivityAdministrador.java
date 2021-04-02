@@ -108,7 +108,7 @@ public class ActivityAdministrador extends AppCompatActivity implements Navigati
             fragmentTransaction3.commit();
         }
         if (menuItem.getItemId()==R.id.CrearAdministrador){
-            Toast.makeText(this, "CrearAdministrador", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(ActivityAdministrador.this,RegistroAdmin.class));
             //startActivity(new Intent(ActivityFamiliar.this,MapaActivity.class));
         }
         if (menuItem.getItemId()==R.id.CerrarSesion){
