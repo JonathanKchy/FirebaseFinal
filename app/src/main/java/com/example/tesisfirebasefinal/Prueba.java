@@ -52,8 +52,8 @@ public class Prueba extends AppCompatActivity {
 
     private DatabaseReference DbRef;
     private FirebaseAuth baseAutenticacion;
-    String NOMBRE_DIRECTORIO = "MisPDFs",nombreUsuario;
-    String NOMBRE_DOCUMENTO = "MiPDF.pdf";
+    String NOMBRE_DIRECTORIO = "MisPdfs",nombreUsuario;
+    String NOMBRE_DOCUMENTO = "MiPdf.pdf";
 
     EditText etTexto;
     Button btnGenerar;
@@ -86,6 +86,8 @@ public class Prueba extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     //
                     contador=(int)dataSnapshot.child("TRANSCRIPCIONES").child(id).getChildrenCount();
+                   // Toast.makeText(getApplicationContext(), "hhhh", Toast.LENGTH_LONG).show();
+
                     nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(id).child("Apodo").getValue().toString();
                 }
             }
@@ -111,13 +113,14 @@ public class Prueba extends AppCompatActivity {
            // public void onClick(View v) {
                 documento = new Document();
                 base();
-               esperarYCerrar(MILISEGUNDOS_ESPERA);
+
+        esperarYCerrar(MILISEGUNDOS_ESPERA);
 
        //     }
         //});
     }
     public void crearPDF() {
-
+        Toast.makeText(getApplicationContext(), "p", Toast.LENGTH_LONG).show();
 
         try {
             file = crearFichero(NOMBRE_DOCUMENTO);
@@ -180,6 +183,9 @@ public class Prueba extends AppCompatActivity {
         return ruta;
     }
     public void base(){
+        String conts=String.valueOf(contador);
+        //Toast.makeText(getApplicationContext(), conts, Toast.LENGTH_LONG).show();
+
         final String id=baseAutenticacion.getCurrentUser().getUid();
         DbRef.child("TRANSCRIPCIONES").child(id).addValueEventListener(new ValueEventListener() {
 
