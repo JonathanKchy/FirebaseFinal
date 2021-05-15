@@ -1,5 +1,6 @@
 package com.example.tesisfirebasefinal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -7,12 +8,21 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.renderscript.Sampler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfTable;
@@ -22,14 +32,85 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import harmony.java.awt.Color;
+
 public class ImpreActivity extends AppCompatActivity {
+    int contador;
+    private DatabaseReference DbRef;
+    private FirebaseAuth baseAutenticacion;
+    private Font fNegrita=new Font(Font.TIMES_ROMAN,30,Font.BOLD);
+    private Font fAzul=new Font(Font.TIMES_ROMAN,20,Font.BOLD, Color.BLUE);
     String NOMBRE_DIRECTORIO = "MisPdfs";
     String NOMBRE_DOCUMENTO = "MiPdf.pdf";
+    String nombreUsuario;
     Button btnGenerar;
+    Document documento;
+    PdfPTable tabla;
+    File file;
+    FileOutputStream ficheroPDF;
+    PdfWriter writer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impre);
+        btnGenerar = findViewById(R.id.btnGenerar);
+        baseAutenticacion= FirebaseAuth.getInstance();
+        DbRef= FirebaseDatabase.getInstance().getReference();
+        final String id=baseAutenticacion.getCurrentUser().getUid();
+
+        DbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    //
+                    contador=(int)dataSnapshot.child("TRANSCRIPCIONES").child(id).getChildrenCount();
+                    String conts=String.valueOf(contador);
+                    Toast.makeText(getApplicationContext(), conts, Toast.LENGTH_LONG).show();
+                    // Toast.makeText(getApplicationContext(), "hhhh", Toast.LENGTH_LONG).show();
+
+                    nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(id).child("Apodo").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+            }
+        });
+
+        //tabla
+        final String id2=baseAutenticacion.getCurrentUser().getUid();
+        DbRef.child("TRANSCRIPCIONES").child(id2).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+                tabla = new PdfPTable(1);
+
+                    /*for(int i = 0 ; i < contador ; i++) {
+                        tabla.addCell("CELDA "+i);
+                    }
+                    Toast.makeText(Prueba.this, "Entro", Toast.LENGTH_LONG).show();*/
+
+                for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
+
+                    tabla.addCell("\t\t\t\t\t\t\t\t"+snapshot.child("titulo").getValue().toString() + ":\n\t\t\t\t\t\t\t\t"+snapshot.child("fecha").getValue().toString());
+                }
+
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //boton
         btnGenerar = findViewById(R.id.btnGenerarImpre);
         // Permisos
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
@@ -45,24 +126,30 @@ public class ImpreActivity extends AppCompatActivity {
         public void onClick(View v) {
         crearPDF2();
             Toast.makeText(ImpreActivity.this, "SE CREO EL PDF", Toast.LENGTH_LONG).show();
+            finish();
         }
         });
     }
     public void crearPDF2(){
-        Document documento= new Document();
+        documento= new Document();
         try {
-            File file=crearFichero2(NOMBRE_DOCUMENTO);
-            FileOutputStream ficheroPDF=new FileOutputStream(file.getAbsolutePath());
+            file=crearFichero2(NOMBRE_DOCUMENTO);
+            ficheroPDF=new FileOutputStream(file.getAbsolutePath());
 
-            PdfWriter writer=PdfWriter.getInstance(documento,ficheroPDF);
+            writer=PdfWriter.getInstance(documento,ficheroPDF);
             documento.open();
-            documento.add(new Paragraph("Tabla \n\n"));
-            documento.add(new Paragraph("menso \n\n"));
+            Paragraph paragraph=new Paragraph("Hola "+nombreUsuario,fNegrita);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            documento.add(paragraph);
+            Paragraph paragraph2=new Paragraph("Tienes un total de: "+contador+" transcripciones\n\n",fAzul);
+            paragraph2.setAlignment(Element.ALIGN_CENTER);
+            documento.add(paragraph2);
+
             //insertamos tabla
-            PdfPTable tabla=new PdfPTable(5);
+           /* tabla=new PdfPTable(5);
             for (int i=0;i<15;i++){
                 tabla.addCell("celda"+i);
-            }
+            }*/
             documento.add(tabla);
         }catch (DocumentException e){
 
