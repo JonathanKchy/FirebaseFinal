@@ -1,16 +1,20 @@
 package com.example.tesisfirebasefinal;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tesisfirebasefinal.Fragments.myadapter;
@@ -35,28 +39,21 @@ import java.io.IOException;
 import harmony.java.awt.Color;
 
 public class PruebaFamiliar extends AppCompatActivity {
-    RecyclerView recview;
-    myadapter adapter;
-    String idPropio;
-
+    int contador;
     private DatabaseReference DbRef;
     private FirebaseAuth baseAutenticacion;
-    String NOMBRE_DIRECTORIO = "MisPDFsFamiliar",nombreUsuario;
-    String NOMBRE_DOCUMENTO = "MiPDF.pdf";
-
-    EditText etTexto;
+    private Font fNegrita=new Font(Font.TIMES_ROMAN,30,Font.BOLD);
+    private Font fAzul=new Font(Font.TIMES_ROMAN,20,Font.BOLD, Color.BLUE);
+    String NOMBRE_DIRECTORIO = "MisPdfsFam";
+    String NOMBRE_DOCUMENTO = "Transcripcion.pdf";
+    String nombreUsuario;
     Button btnGenerar;
     Document documento;
     PdfPTable tabla;
     File file;
     FileOutputStream ficheroPDF;
     PdfWriter writer;
-    int contador2;
-    String idPropio2;
     String dato;
-    public static int MILISEGUNDOS_ESPERA = 2000;
-    private Font fNegrita=new Font(Font.TIMES_ROMAN,30,Font.BOLD);
-    private Font fAzul=new Font(Font.TIMES_ROMAN,20,Font.BOLD, Color.BLUE);
 
 
 
@@ -64,28 +61,22 @@ public class PruebaFamiliar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prueba_familiar);
-        //etTexto = findViewById(R.id.etTexto);
         dato=getIntent().getStringExtra("dato");
-        btnGenerar = findViewById(R.id.btnGenerarFam);
+
         baseAutenticacion= FirebaseAuth.getInstance();
         DbRef= FirebaseDatabase.getInstance().getReference();
-        final String id=baseAutenticacion.getCurrentUser().getUid();
-        //Toast.makeText(PruebaFamiliar.this, dato, Toast.LENGTH_LONG).show();
-       // Toast.makeText(PruebaFamiliar.this,contador2, Toast.LENGTH_LONG).show();
+        final String idPropio=baseAutenticacion.getCurrentUser().getUid();
 
-       DbRef.addValueEventListener(new ValueEventListener() {
+        DbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     //
+                    contador=(int)dataSnapshot.child("TRANSCRIPCIONES").child(dato).getChildrenCount();
 
-                    contador2= (int) dataSnapshot.getChildrenCount();
+                    // Toast.makeText(getApplicationContext(), "hhhh", Toast.LENGTH_LONG).show();
+
                     nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(dato).child("Apodo").getValue().toString();
-                   // Toast.makeText(PruebaFamiliar.this,contador2, Toast.LENGTH_LONG).show();
-
-                }else{
-                    Toast.makeText(PruebaFamiliar.this, "no existe", Toast.LENGTH_LONG).show();
-
                 }
             }
 
@@ -95,93 +86,9 @@ public class PruebaFamiliar extends AppCompatActivity {
 
             }
         });
-        // Permisos
-        /*if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
-                    1000);
-        }*/
 
-        // Genera el documento
-        // btnGenerar.setOnClickListener(new View.OnClickListener() {
-        //   @Override
-        // public void onClick(View v) {
-        documento = new Document();
-        base();
-        esperarYCerrar(MILISEGUNDOS_ESPERA);
-
-        //     }
-        //});
-        //Toast.makeText(PruebaFamiliar.this, contador2, Toast.LENGTH_LONG).show();
-
-    }
-    public void crearPDF() {
-
-
-        try {
-            file = crearFichero(NOMBRE_DOCUMENTO);
-            ficheroPDF = new FileOutputStream(file.getAbsolutePath());
-
-            writer = PdfWriter.getInstance(documento, ficheroPDF);
-
-            documento.open();
-            Paragraph paragraph=new Paragraph("Hola "+nombreUsuario,fNegrita);
-            paragraph.setAlignment(Element.ALIGN_CENTER);
-            documento.add(paragraph);
-            Paragraph paragraph2=new Paragraph("Tienes un total de: "+contador2+" transcripciones\n\n",fAzul);
-            paragraph2.setAlignment(Element.ALIGN_CENTER);
-            documento.add(paragraph2);
-            // documento.add(new Paragraph( etTexto.getText().toString()+"\n\n"));
-
-
-
-            // Insertamos una tabla
-            /*tabla = new PdfPTable(5);
-            for(int i = 0 ; i < 15 ; i++) {
-                tabla.addCell("CELDA "+i);
-            }*/
-
-            documento.add(tabla);
-
-        } catch(DocumentException e) {
-        } catch(IOException e) {
-        } finally {
-            documento.close();
-        }
-    }
-
-    public File crearFichero(String nombreFichero) {
-        File ruta = getRuta();
-
-        File fichero = null;
-        if(ruta != null) {
-            fichero = new File(ruta, nombreFichero);
-        }
-
-        return fichero;
-    }
-
-    public File getRuta() {
-        File ruta = null;
-
-        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            ruta = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), NOMBRE_DIRECTORIO);
-
-            if(ruta != null) {
-                if(!ruta.mkdirs()) {
-                    if(!ruta.exists()) {
-                        return null;
-                    }
-                }
-            }
-
-        }
-        return ruta;
-    }
-    public void base(){
-        final String id=baseAutenticacion.getCurrentUser().getUid();
+        //tabla
+       // final String idPropio2=baseAutenticacion.getCurrentUser().getUid();
         DbRef.child("TRANSCRIPCIONES").child(dato).addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -210,23 +117,78 @@ public class PruebaFamiliar extends AppCompatActivity {
 
             }
         });
-    }
-    public void esperarYCerrar(int milisegundos) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                // acciones que se ejecutan tras los milisegundos
-                crearPDF();
+
+        //boton
+        btnGenerar = findViewById(R.id.btnGenerarFa);
+        // Permisos
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,},
+                    1000);
+        }
+
+        btnGenerar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearPDF2();
                 Toast.makeText(PruebaFamiliar.this, "SE CREO EL PDF", Toast.LENGTH_LONG).show();
                 finish();
-
             }
-        }, milisegundos);
+        });
+
+
     }
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == event.KEYCODE_BACK){
-            this.finish();
+    public void crearPDF2(){
+        documento= new Document();
+        try {
+            file=crearFichero2(NOMBRE_DOCUMENTO);
+            ficheroPDF=new FileOutputStream(file.getAbsolutePath());
+
+            writer=PdfWriter.getInstance(documento,ficheroPDF);
+            documento.open();
+            Paragraph paragraph=new Paragraph("Hola la tabla es de: "+nombreUsuario,fNegrita);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            documento.add(paragraph);
+            Paragraph paragraph2=new Paragraph("Tiene un total de: "+contador+" transcripciones\n\n",fAzul);
+            paragraph2.setAlignment(Element.ALIGN_CENTER);
+            documento.add(paragraph2);
+
+            //insertamos tabla
+           /* tabla=new PdfPTable(5);
+            for (int i=0;i<15;i++){
+                tabla.addCell("celda"+i);
+            }*/
+            documento.add(tabla);
+        }catch (DocumentException e){
+
+        }catch (IOException e){
+
+        }finally {
+            documento.close();
         }
-        return super.onKeyDown(keyCode, event);
+    }
+    public File crearFichero2(String nombreFichero){
+        File ruta=getRuta();
+        File fichero=null;
+        if (ruta!=null){
+            fichero=new File(ruta,nombreFichero);
+        }
+        return fichero;
+    }
+    public File getRuta(){
+        File ruta=null;
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+            ruta=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),NOMBRE_DIRECTORIO);
+            if(ruta!=null){
+                if (!ruta.mkdir()){
+                    if (!ruta.exists()){
+                        return null;
+                    }
+                }
+            }
+        }
+        return ruta;
     }
 }

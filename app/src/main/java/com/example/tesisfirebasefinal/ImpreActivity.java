@@ -64,8 +64,6 @@ public class ImpreActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     //
                     contador=(int)dataSnapshot.child("TRANSCRIPCIONES").child(id).getChildrenCount();
-                    String conts=String.valueOf(contador);
-                    Toast.makeText(getApplicationContext(), conts, Toast.LENGTH_LONG).show();
                     // Toast.makeText(getApplicationContext(), "hhhh", Toast.LENGTH_LONG).show();
 
                     nombreUsuario=dataSnapshot.child("USUARIOS").child("PRINCIPAL").child(id).child("Apodo").getValue().toString();
